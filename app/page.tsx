@@ -4,13 +4,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ThumbnailSlot } from "@/components/ThumbnailSlot";
 import {
   PROVIDER_META,
+  PROVIDER_ORDER,
   STATIC_MODELS,
   type CompareResult,
   type ProviderId,
   type ProviderModel,
 } from "@/lib/types";
 
-const PROVIDERS = Object.keys(PROVIDER_META) as ProviderId[];
+const PROVIDERS = PROVIDER_ORDER;
 const STORAGE_KEYS = "thumbnail-tester-keys";
 
 function fileToDataUrl(file: File): Promise<string> {
@@ -34,10 +35,10 @@ function loadStoredKeys(): Partial<Record<ProviderId, string>> {
 export default function HomePage() {
   const [imageA, setImageA] = useState<string | null>(null);
   const [imageB, setImageB] = useState<string | null>(null);
-  const [provider, setProvider] = useState<ProviderId>("ollama-local");
-  const [model, setModel] = useState(STATIC_MODELS["ollama-local"][0].id);
+  const [provider, setProvider] = useState<ProviderId>("ollama-cloud");
+  const [model, setModel] = useState(STATIC_MODELS["ollama-cloud"][0].id);
   const [models, setModels] = useState<ProviderModel[]>(
-    STATIC_MODELS["ollama-local"]
+    STATIC_MODELS["ollama-cloud"]
   );
   const [modelSource, setModelSource] = useState<"live" | "static">("static");
   const [apiKey, setApiKey] = useState("");
@@ -165,9 +166,15 @@ export default function HomePage() {
         <p className="brand">ThumbnailTester</p>
         <h1>Which thumbnail gets the click?</h1>
         <p className="lede">
-          Upload two options. A vision model scores predicted CTR and paints
-          attention heatmaps so you see why.
+          Upload two options. Ollama Cloud (or another vision provider) scores
+          predicted CTR and paints attention heatmaps so you see why.
         </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="hero-art"
+          src="/hero.png"
+          alt="ThumbnailTester A/B comparison with heatmap winner"
+        />
       </header>
 
       <section className="controls">

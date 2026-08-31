@@ -1,58 +1,49 @@
 # ThumbnailTester
 
-Upload two thumbnails. A vision model predicts the click-through winner and paints attention heatmaps so you can see why.
+Upload two thumbnails. **Ollama Cloud** predicts the click-through winner and paints attention heatmaps so you can see why.
 
-## Features
+Also supports Ollama Local, OpenAI, Anthropic, and Google Gemini.
 
-- Side-by-side thumbnail upload (drag & drop or click)
-- Predicted CTR winner with confidence + written reasons
-- Attention heatmaps overlaid on each thumbnail
-- Multi-provider vision support:
-  - **Ollama (Local)** — talks to your local Ollama server
-  - **Ollama Cloud** — `https://ollama.com` with API key
-  - **OpenAI** — GPT-4o / 4.1 / o4-mini, etc.
-  - **Anthropic** — Claude vision models
-  - **Google Gemini** — Gemini multimodal models
-- Live model lists from Ollama when available (falls back to a curated catalog)
-- API keys stored only in your browser (`localStorage`) or server `.env`
+## Quick start (Ollama Cloud)
 
-## Quick start
+1. Create an API key at [ollama.com/settings/keys](https://ollama.com/settings/keys)
+2. Run the app:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+3. Open [http://localhost:3000](http://localhost:3000)
+4. Provider defaults to **Ollama Cloud** — paste your key, pick a vision model (e.g. `gemma4`, `qwen3.5`, `glm-5.3-flash`), upload A/B, hit **Predict winner**
 
-### Optional server env
-
-Copy `.env.example` to `.env.local`:
+Or put the key in `.env.local`:
 
 ```bash
-OLLAMA_BASE_URL=http://127.0.0.1:11434
-OLLAMA_API_KEY=
-OPENAI_API_KEY=
-ANTHROPIC_API_KEY=
-GOOGLE_API_KEY=
+OLLAMA_API_KEY=your_key_here
 ```
 
-Keys entered in the UI override env for that request.
+Cloud calls go to `https://ollama.com/api/chat` with `Authorization: Bearer …`.
 
-### Local Ollama
+## Other providers
 
-1. Install and run [Ollama](https://ollama.com)
-2. Pull a vision model, e.g. `ollama pull llava` or `ollama pull llama3.2-vision`
-3. Select **Ollama (Local)** in the app and hit **Predict winner**
+| Provider | Notes |
+| --- | --- |
+| Ollama Local | `http://127.0.0.1:11434` — pull a vision model first |
+| OpenAI | `OPENAI_API_KEY` |
+| Anthropic | `ANTHROPIC_API_KEY` |
+| Google Gemini | `GOOGLE_API_KEY` |
+
+Keys entered in the UI are stored only in browser `localStorage` and override env for that request.
 
 ## Scripts
 
-| Command        | Description              |
-| -------------- | ------------------------ |
-| `npm run dev`  | Development server       |
-| `npm run build`| Production build         |
-| `npm start`    | Run production server    |
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm start` | Run production server |
 
 ## Stack
 
-Next.js (App Router) + TypeScript. No Electron — a local web app is enough and easier to run.
+Next.js (App Router) + TypeScript.

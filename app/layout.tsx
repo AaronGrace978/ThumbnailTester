@@ -4,7 +4,13 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "ThumbnailTester",
   description:
-    "Upload two thumbnails — a vision model predicts the click-through winner with heatmap reasons.",
+    "Upload two thumbnails — Ollama Cloud predicts the click-through winner with heatmap reasons.",
+  openGraph: {
+    title: "ThumbnailTester",
+    description:
+      "Ollama Cloud vision A/B tester with attention heatmaps.",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({

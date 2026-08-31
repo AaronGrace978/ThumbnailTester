@@ -3,7 +3,7 @@ import { STATIC_MODELS, type ProviderId } from "@/lib/types";
 
 export async function GET(req: NextRequest) {
   const provider = (req.nextUrl.searchParams.get("provider") ||
-    "ollama-local") as ProviderId;
+    "ollama-cloud") as ProviderId;
   const ollamaBase =
     req.nextUrl.searchParams.get("baseUrl") ||
     process.env.OLLAMA_BASE_URL ||
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
   }
 
   return NextResponse.json({
-    models: STATIC_MODELS[provider] ?? STATIC_MODELS["ollama-local"],
+    models: STATIC_MODELS[provider] ?? STATIC_MODELS["ollama-cloud"],
     source: "static",
   });
 }

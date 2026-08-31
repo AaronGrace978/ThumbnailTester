@@ -52,20 +52,28 @@ export interface AnalyzeRequest {
   ollamaBaseUrl?: string;
 }
 
+export const PROVIDER_ORDER: ProviderId[] = [
+  "ollama-cloud",
+  "ollama-local",
+  "openai",
+  "anthropic",
+  "google",
+];
+
 export const PROVIDER_META: Record<
   ProviderId,
   { label: string; needsKey: boolean; keyEnv?: string; hint: string }
 > = {
-  "ollama-local": {
-    label: "Ollama (Local)",
-    needsKey: false,
-    hint: "Runs against a local Ollama server (default http://localhost:11434)",
-  },
   "ollama-cloud": {
     label: "Ollama Cloud",
     needsKey: true,
     keyEnv: "OLLAMA_API_KEY",
-    hint: "Uses https://ollama.com with your Ollama Cloud API key",
+    hint: "Primary path — https://ollama.com with your key from ollama.com/settings/keys",
+  },
+  "ollama-local": {
+    label: "Ollama (Local)",
+    needsKey: false,
+    hint: "Optional fallback — local Ollama at http://localhost:11434",
   },
   openai: {
     label: "OpenAI",
@@ -88,6 +96,18 @@ export const PROVIDER_META: Record<
 };
 
 export const STATIC_MODELS: Record<ProviderId, ProviderModel[]> = {
+  "ollama-cloud": [
+    { id: "gemma4", label: "Gemma 4 (cloud)", vision: true },
+    { id: "glm-5.3-flash", label: "GLM 5.3 Flash (vision cloud)", vision: true },
+    { id: "qwen3.5", label: "Qwen 3.5 (vision cloud)", vision: true },
+    { id: "qwen3-vl:235b-cloud", label: "Qwen3-VL 235B Cloud", vision: true },
+    { id: "minimax-m3", label: "MiniMax M3 (vision cloud)", vision: true },
+    { id: "kimi-k2.6", label: "Kimi K2.6 (vision cloud)", vision: true },
+    { id: "kimi-k3", label: "Kimi K3 (vision cloud)", vision: true },
+    { id: "mistral-large-3", label: "Mistral Large 3 (vision cloud)", vision: true },
+    { id: "llama3.2-vision:90b", label: "Llama 3.2 Vision 90B", vision: true },
+    { id: "llava", label: "LLaVA", vision: true },
+  ],
   "ollama-local": [
     { id: "llava", label: "LLaVA", vision: true },
     { id: "llava:13b", label: "LLaVA 13B", vision: true },
@@ -99,14 +119,7 @@ export const STATIC_MODELS: Record<ProviderId, ProviderModel[]> = {
     { id: "moondream", label: "Moondream", vision: true },
     { id: "qwen2.5vl", label: "Qwen2.5-VL", vision: true },
     { id: "gemma3", label: "Gemma 3", vision: true },
-  ],
-  "ollama-cloud": [
-    { id: "llama3.2-vision", label: "Llama 3.2 Vision", vision: true },
-    { id: "llama3.2-vision:90b", label: "Llama 3.2 Vision 90B", vision: true },
-    { id: "llava", label: "LLaVA", vision: true },
-    { id: "qwen2.5vl", label: "Qwen2.5-VL", vision: true },
-    { id: "gemma3", label: "Gemma 3", vision: true },
-    { id: "minicpm-v", label: "MiniCPM-V", vision: true },
+    { id: "gemma4", label: "Gemma 4", vision: true },
   ],
   openai: [
     { id: "gpt-4o", label: "GPT-4o", vision: true },
